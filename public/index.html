@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>COVID-19 Statistics</title>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .navbar-header {
+            float: left;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            float: none;
+        }
+    </style>
+    <!-- <script src="js/jquery.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="  crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.5/dist/chartjs-plugin-zoom.min.js" integrity="sha256-KLpPTiChnsiDPdNKaRZvEeOpCNjUCJ61fRBe7zX2SZU=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+    
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+        </script>
+    
+</head>
+    
+    
+<body>
+
+    
+<div class="row">
+    <div class="col-md-3 col-sm-1">
+        <div class="col-md-2 col-sm-12">
+                 <div class="text-center" id="google_translate_element"></div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12 ">
+        <div class="col-md-12 col-sm-12">
+            
+            <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <div class="navbar-header">
+            <a href="#" class="navbar-brand">
+                COVID-19 Simple Statistics</a>
+        </div>
+    </div>
+</nav>
+
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-1"> 
+        
+    </div>
+
+</div>
+    
+
+
+<div class="row">
+    <div class="col-md-2 col-sm-2">
+                 
+    </div>
+    <div class="col-md-8 col-sm-8 ">
+        <div class="col-md-12 col-sm-12" >
+            <div class="text-center">
+            Source:	<a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">European Centre for Disease Prevention and Control</a>
+                </div>
+            <div id="updateTimestamp" class="text-center">
+                Last Updated: ...
+                </div>
+            
+
+        </div>
+    </div>
+    
+
+</div>
+    
+    <br>
+    
+    
+
+    
+    
+    <div class="row no-gutters">
+      <div class="col-lg-3 col-md-12 col-sm-12">
+          <div class="card"> <div class="card-body"> 
+          <div class="row no-gutters">
+          
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                  
+                  
+                  
+                      
+                      
+          <div class="text-center" style="max-height: 10vh;">
+              <p class="h6">Click on a metric</p>
+                                to view the trends for selected countries
+          </div>
+                      <br>
+                <!-- <div class="overflow-auto" style="max-height: 60vh;"> -->
+                 
+                <div class="overflow-auto" style="max-height: 60vh;">          
+                
+                        <div class="list-group" id="chartList" role="tablist">
+                          <a class="list-group-item list-group-item-action active" data-toggle="list" href="#cases" role="tab">
+                              <p class="h6">Confirmed Cases</p>
+                              Cumulative
+                            </a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesPerMillion" role="tab">
+                            <p class="h6">Confirmed Cases</p>
+                            Per 1 Million People</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesDaily" role="tab">
+                              <p class="h6">Confirmed Cases</p>
+                                Daily </a>
+                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#logCases" role="tab">
+                             <p class="h6">Confirmed Cases</p>
+                             Logarithmic</a>
+                          
+                          <a class="list-group-item list-group-item-action" data-toggle="list" href="#deaths" role="tab">
+                              <p class="h6">Reported Deaths</p>
+                              Cumulative</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsDaily" role="tab">
+                              <p class="h6">Reported Deaths</p>
+                              Daily</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#logDeaths" role="tab">
+                              <p class="h6">Reported Deaths</p>
+                              Logarithmic</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsPerMillion" role="tab">
+                                <p class="h6">Reported Deaths</p>
+                                Per 1 Million People</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#caseFatalityRate" role="tab">
+                                <p class="h6">Case Fatality Rate</p>
+                                In Percent</a>
+                          
+                        </div>
+                      
+                </div>    
+          
+           </div> </div>
+        </div>
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+          </div>
+          <br>
+          <br>
+        </div>
+              
+      <div class="col-lg-6 col-md-12 col-sm-12">
+              
+        <div class="row no-gutters">
+          
+              <div class="col-lg- col-md-1 col-sm-1 col-xs-1"></div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  
+          <div id="progressIndicator">
+              <div class="col-md-12 col-sm-12">
+              <div class="card"> <div class="card-body"> 
+                          <div class="text-center">
+                                    <p id="progressIndicatorText"  style="width: 100%">
+                                        Loading...</p>
+                                    <br>
+                          </div>
+                  
+                   </div></div>
+                    <hr>
+                  </div>
+              
+           </div>
+              
+          <div class="tab-content">
+
+            <div class="tab-pane fade" id="cases" role="tabpanel">
+                 <div class="col-md-12 col-sm-12">
+                        <!-- <div id="wrapper" style="position: relative; height: 70vh"> -->
+                 <div class="card"> <div class="card-body"> 
+                     <br>
+                        <div id="wrapper" style="position: relative; height: 70vh">
+                            <canvas id="casesChart"></canvas>
+                        </div>
+                </div></div>
+                <hr>
+                            <div class="card">
+                              <div class="card-body">
+                                <p>
+                            In the chart you can find data on the total number of COVID-19 confirmed cases since the pandemic started for the countries you selected. 
+                           </p> 
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                   
+                              </div>
+                            </div>
+                </div>
+                             
+            </div>
+
+            <div class="tab-pane fade" id="casesPerMillion" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="casesPerMillionChart"></canvas>
+                    </div>
+                         </div></div>
+                    <hr>
+                    <div class="card">
+                              <div class="card-body">
+                    <p>
+                            This chart shows how the number of confirmed cases is related to the population of a selected country.
+                            In the chart you can find data on the total number of confirmed cases per one million people living in the countries you selected. 
+                        
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart is based on the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="logCases" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="logCasesChart"></canvas>
+                    </div> </div></div><hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                             In the chart you can find data on the total number of confirmed cases that were reported since the pandemic started for the countries you selected. This data is shown using a <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" >logarithmic scale</a> to make it easier to read and compare trends that change exponentially. For example, when you read 2e+5 (which is using a type of <a href="https://en.wikipedia.org/wiki/Scientific_notation">scientific notation</a> to represent 2 x 10<sup>5</sup>) on the y-axis for any given day, it means that 200000 confirmed cases were reported since the pandemic started.
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="casesDaily" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="casesDailyChart"></canvas>
+                    </div> </div></div>
+                    <hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                            In the chart you can find data on the number of new confirmed cases that were reported on a given day for the countries you selected. This chart does not show the total number of cases on any given day.
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
+            </div>
+              
+            
+
+            <div class="tab-pane fade" id="deaths" role="tabpanel">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card"> <div class="card-body"> 
+                     <br>
+                        <div id="wrapper" style="position: relative; height: 70vh">
+                            <canvas id="deathsChart"></canvas>
+                        </div> </div></div><hr>
+                        <div class="card">
+                              <div class="card-body">
+                        <p>
+                            In the chart you can find data on the total number of reported deaths from COVID-19 since the pandemic started for the countries you selected. 
+                           </p> 
+                         <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    </div>
+                
+            </div>
+
+            <div class="tab-pane fade" id="deathsPerMillion" role="tabpanel">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card"> <div class="card-body"> 
+                     <br>
+                        <div id="wrapper" style="position: relative; height: 70vh">
+                            <canvas id="deathsPerMillionChart"></canvas>
+                        </div> </div></div><hr>
+                        <div class="card">
+                              <div class="card-body">
+                        <p>
+                            This charts shows how the number of reported deaths from COVID-19 is related to the population of a selected country. In the chart you can find data on the total number of deaths per one million people living in the countries you selected. 
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart is based on the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries.
+                            </p>
+                                  </div></div>
+                    </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="deathsDaily" role="tabpanel">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card"> <div class="card-body"> 
+                     <br>
+                        <div id="wrapper" style="position: relative; height: 70vh">
+                            <canvas id="deathsDailyChart"></canvas>
+                        </div> </div></div><hr>
+                        <div class="card"><div class="card-body">
+                        <p>
+                            In the chart you can find data on the number of new deaths from COVID-19 that were reported on a given day for the countries you selected.
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is diffirent from the number of all the deaths that took place from COVID-19 in the selected countries.
+                            </p>
+                        </div></div>
+                        
+                    </div>
+            </div>
+              
+              <div class="tab-pane fade" id="logDeaths" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="logDeathsChart"></canvas>
+                    </div> </div></div><hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                             In the chart you can find data on the total number of deaths that were reported since the pandemic started for the countries you selected. This data is shown using a <a href="https://en.wikipedia.org/wiki/Logarithmic_scale" >logarithmic scale</a> to make it easier to read and compare trends that change exponentially. For example, when you read 2e+3 (which is using a type of <a href="https://en.wikipedia.org/wiki/Scientific_notation">scientific notation</a> to represent 2 x 10<sup>3</sup>) on the y-axis for any given day, it means that 2000 deaths were reported since the pandemic started.
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
+            </div>
+              
+              <div class="tab-pane fade" id="caseFatalityRate" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="caseFatalityRateChart"></canvas>
+                    </div> </div></div><hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                             In the chart you can find data on the Case Fatality Rate since the pandemic started. The index is based on the number of confirmed cases and reported deaths for the countries you selected. Case Fatality Rate is here defined as the total number of reported deaths divided by the total number of confirmed cases. The index is only calculated for days where the cummulative number of cases exceeds 1000.
+                            
+                            <p>
+                            The Case Fatality Rate is NOT equal to the true risk of death. When there are many people that are infected, but not diagnosed, the index may significantly overestimate the risk of death.
+                            </p>
+                                  <p>                            
+                            Please note that different countries have different policies and procedures that lead to different classification of whether a person died from COVID-19 or underlying conditions. This index should be treated as a qualitative measure of how countries and their citizens are affected by COVID-19 and should not be interpreted as the likelihood of death once a person is diagnosed with the virus.
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
+            </div>
+
+        </div>
+                      
+          
+                  </div>
+          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                  
+        </div>  
+          <br>
+          <br>
+    </div>
+          
+        
+        <div class="col-lg-3 col-md-12 col-sm-12">
+            
+            <div class="card"> <div class="card-body"> 
+                
+            <div class="row no-gutters">
+          
+              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                  <div class="text-center"  style="height: 10vh;">
+                      <p class="h6">Click on a country name</p>
+                                to add/remove trend to the plot
+                      
+                </div>
+                  
+                  <div style="height: 10vh;">
+                      <br>
+                          <input class="form-control" id="countryInput" type="text" placeholder="Find countries by name...">
+                          
+                          <!--<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#countryListCollapse" aria-expanded="false" aria-controls="countryListCollapse" id="#buttonId">
+                                Show/hide available countries
+                          </button>-->
+                            <br>
+                  </div>
+                  <div class="overflow-auto" style="max-height: 50vh;">
+                          <div class="collapse show" id="countryListCollapse">
+                              <div class="list-group" id="countryList" >
+                            </div>  
+                        </div>
+                </div>
+                  <br>
+                  
+             </div>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+                </div>
+        </div>
+          </div></div>
+    </div>
+    
+
+
+        <div class="row">
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-8 col-sm-8 ">
+                <div class="col-md-12 col-sm-12">
+
+                    <p class="text-center">
+                        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a> | April 2020 | Jacek Garbulinski | jckgarbulinski@gmail.com 
+                    </p>
+
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2"></div>
+
+        </div>
+</body>
+
+
+
+</html>
+

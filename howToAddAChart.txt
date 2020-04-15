@@ -1,0 +1,18 @@
+HOW TO ADD A CHART TO STATS2020
+1 Add your tab in html:
+	a) in list id="chartList" add your list item.
+		just copy an existing item and change its href to a name of choice
+	b) for the div with class="tab-content" add your div
+		with <div class="tab-pane fade" id="casesPerMillion" role="tabpanel">
+		copying some existing one
+	c) change id, canvas id and description
+
+2 Now, move to index.js
+	a) find something like var ctx_cases = document.getElementById("casesChart");
+	b) add your own plot with the canvas id you chose in 1c)
+	c) add your char in initCharts same as the others 
+		(with canvas id and title of choice)
+	d) 	1st arg canvas variable from 1c
+		2nd arg data
+		3rd metricName - similar to 2nd arg data
+		4th chart title, x and y labels, linear/logarithmic
