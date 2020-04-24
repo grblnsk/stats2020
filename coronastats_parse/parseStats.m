@@ -25,7 +25,7 @@ disp(['pre-processed'])
 %%
 formatDate = @(dateVal) datestr(dateVal,'dd/MM/yyyy');
 
-Countries = string( unique(txtDATA(:,11)) );
+Countries = string( unique(txtDATA(:,7)) );
 
 jsonDataStruct = struct();
 for k=1:size(Countries,1)
@@ -63,7 +63,7 @@ disp(['done'])
 
 function countryData = parseCountry(countryName, numData, txtData)
 
-countryCheck = @(row, country) strcmp( txtData{row,11}, countryName );
+countryCheck = @(row, country) strcmp( txtData{row,7}, countryName );
 createDate = @(index) datenum( numData(index,3:-1:1));
 cases = @(index) numData(index,4);
 deaths = @(index) numData(index,5);
