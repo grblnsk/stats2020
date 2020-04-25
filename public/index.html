@@ -125,28 +125,38 @@
                               <p class="h6">Confirmed Cases</p>
                               Cumulative
                             </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#logCases" role="tab">
+                             <p class="h6">Confirmed Cases</p>
+                             Logarithmic</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesPerMillion" role="tab">
                             <p class="h6">Confirmed Cases</p>
                             Per 1 Million People</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesDaily" role="tab">
                               <p class="h6">Confirmed Cases</p>
                                 Daily </a>
-                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#logCases" role="tab">
-                             <p class="h6">Confirmed Cases</p>
-                             Logarithmic</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesDailyPerMillion" role="tab">
+                              <p class="h6">Confirmed Cases</p>
+                                Daily - Per 1 Million People </a>
+                         
                           
                           <a class="list-group-item list-group-item-action" data-toggle="list" href="#deaths" role="tab">
                               <p class="h6">Reported Deaths</p>
                               Cumulative</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsDaily" role="tab">
-                              <p class="h6">Reported Deaths</p>
-                              Daily</a>
+                            
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#logDeaths" role="tab">
                               <p class="h6">Reported Deaths</p>
                               Logarithmic</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsPerMillion" role="tab">
                                 <p class="h6">Reported Deaths</p>
                                 Per 1 Million People</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsDaily" role="tab">
+                              <p class="h6">Reported Deaths</p>
+                              Daily</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#deathsDailyPerMillion" role="tab">
+                              <p class="h6">Reported Deaths</p>
+                              Daily  - Per 1 Million People</a>
+                            
+                            
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#caseFatalityRate" role="tab">
                                 <p class="h6">Case Fatality Rate</p>
                                 In Percent</a>
@@ -161,6 +171,8 @@
           </div>
           <br>
           <br>
+        
+          
         </div>
               
       <div class="col-lg-6 col-md-12 col-sm-12">
@@ -185,7 +197,7 @@
               
            </div>
               
-          <div class="tab-content">
+          <div id="chartTabs" class="tab-content">
 
             <div class="tab-pane fade" id="cases" role="tabpanel">
                  <div class="col-md-12 col-sm-12">
@@ -281,6 +293,29 @@
                 </div>
             </div>
               
+              <div class="tab-pane fade" id="casesDailyPerMillion" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="casesDailyPerMillionChart"></canvas>
+                    </div> </div></div>
+                    <hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                            In the chart you can find data on the number of new confirmed cases that were reported on a given day per one million people living in the countries you selected.
+                            
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
+            </div>
+              
             
 
             <div class="tab-pane fade" id="deaths" role="tabpanel">
@@ -342,6 +377,29 @@
                         </div></div>
                         
                     </div>
+            </div>
+              
+              <div class="tab-pane fade" id="deathsDailyPerMillion" role="tabpanel">
+                <div class="col-md-12 col-sm-12">
+                    <div class="card"> <div class="card-body"> 
+                     <br>
+                    <div id="wrapper" style="position: relative; height: 70vh">
+                        <canvas id="deathsDailyPerMillionChart"></canvas>
+                    </div> </div></div>
+                    <hr>
+                    <div class="card">
+                              <div class="card-body">
+                        <p>
+                            In the chart you can find data on the number of new deaths from COVID-19 that were reported on a given day per one million people living in the countries you selected.
+                            
+                            </p>
+                        
+                            <p>
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                            </p>
+                                  </div></div>
+                    
+                </div>
             </div>
               
               <div class="tab-pane fade" id="logDeaths" role="tabpanel">

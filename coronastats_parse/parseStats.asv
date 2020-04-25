@@ -43,18 +43,16 @@ for k=1:size(Countries,1)
     countryCasesDailyPerMillion = countryToCasesDailyPerMillionPreJSON(countryName,countryData);
     countryDeaths = countryToDeathsPreJSON(countryName,countryData);
     countryDeathsDaily = countryToDeathsDailyPreJSON(countryName,countryData);
-    countryDeathsDailyPerMillion = countryToDeathsDailyPerMillionPreJSON(countryName,countryData);
+    countryDeathsDailyPerMillion = countryToDeathsPerMillionPreJSON(countryName,countryData);
     countryCasesPerMillion = countryToCasesPerMillionPreJSON(countryName,countryData);
     countryDeathsPerMillion = countryToDeathsPerMillionPreJSON(countryName,countryData);
     countryCaseFatalityRate = countryToCaseFatalityRatePreJSON(countryName,countryData);
     jsonDataStruct.data.cases.(countryName) = countryCases.(countryName);
     jsonDataStruct.data.deaths.(countryName) = countryDeaths.(countryName);
     jsonDataStruct.data.casesDaily.(countryName) = countryCasesDaily.(countryName);
-    jsonDataStruct.data.casesDailyPerMillion.(countryName) = countryCasesDailyPerMillion.(countryName);
     jsonDataStruct.data.deathsDaily.(countryName) = countryDeathsDaily.(countryName);
     jsonDataStruct.data.casesPerMillion.(countryName) = countryCasesPerMillion.(countryName);
     jsonDataStruct.data.deathsPerMillion.(countryName) = countryDeathsPerMillion.(countryName);
-    jsonDataStruct.data.deathsDailyPerMillion.(countryName) = countryDeathsDailyPerMillion.(countryName);
     jsonDataStruct.data.caseFatalityRate.(countryName) = countryCaseFatalityRate.(countryName);
 end
 jsonDataStruct.timestamp = updateTimestamp;
@@ -171,7 +169,7 @@ function countryJSON = countryToDeathsDailyPerMillionPreJSON(countryName,country
         x = [x;formatDate(countryData(k,2))];
     end
     x = string( x );
-    y = string( countryData(:,4) ./ (countryData(:,7)./1000000) );
+    y = string( countryData(:,3) ./ (countryData(:,7)./1000000) );
     countryJSON = struct( countryName, table(x,y) );
 end
 

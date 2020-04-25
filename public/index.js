@@ -1,6 +1,59 @@
 $( document ).ready(function() {
     
 
+    
+    // Assign html elements to js variables
+    var ctx_cases = document.getElementById("casesChart");
+    var ctx_casesPerMillion = document.getElementById("casesPerMillionChart");
+    var ctx_logCases = document.getElementById("logCasesChart");
+    var ctx_casesDaily = document.getElementById("casesDailyChart");
+    var ctx_casesDailyPerMillion = document.getElementById("casesDailyPerMillionChart");
+    var ctx_deaths = document.getElementById("deathsChart");
+    var ctx_deathsDaily = document.getElementById("deathsDailyChart");
+    var ctx_deathsDailyPerMillion = document.getElementById("deathsDailyPerMillionChart");
+   var ctx_deathsPerMillion = document.getElementById("deathsPerMillionChart")
+   var ctx_logDeaths = document.getElementById("logDeathsChart");
+   var ctx_caseFatalityRate = document.getElementById("caseFatalityRateChart");
+    
+    var chartList = $('#chartList');
+    var chartTabs = $('#chartTabs');
+    function addChartToList(chartTabId, canvasId, title1, title2, description){
+        chartList.append( '<a class="list-group-item list-group-item-action" data-toggle="list" href="#'+chartTabId+'" role="tab"><p class="h6">'+title1+'</p>'+title2+'</a>' );
+        
+        chartTabs.append('<div class="tab-pane fade" id="'+chartTabId+'" role="tabpanel"><div class="col-md-12 col-sm-12"><div class="card"> <div class="card-body"><br><div id="wrapper" style="position: relative; height: 70vh"><canvas id="'+canvasId+'"></canvas></div></div></div><hr><div class="card"><div class="card-body"><p>'+description+'</p><p>The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated".</p></div></div></div></div>');
+    }
+    
+    //CASES
+    addChartToList("casesDay0", "casesDay0Chart", "Day 0: Confirmed Cases", "Cumulative", "In the chart you can find data on the total number of COVID-19 confirmed cases since the pandemic started for the countries you selected.");
+    var ctx_casesDay0 = document.getElementById("casesDay0Chart");
+        
+    addChartToList("casesPerMillionDay0", "casesPerMillionDay0Chart", "Day 0: Confirmed Cases", "Per 1 Million People", "This chart shows how the number of confirmed cases is related to the population of a selected country. In the chart you can find data on the total number of confirmed cases per one million people living in the countries you selected.");
+    var ctx_casesPerMillionDay0 = document.getElementById("casesPerMillionDay0Chart");
+    
+    addChartToList("casesDailyDay0", "casesDailyDay0Chart", "Day 0: Confirmed Cases", "Daily", "In the chart you can find data on the number of new confirmed cases that were reported on a given day for the countries you selected. This chart does not show the total number of cases on any given day.");
+    var ctx_casesDailyDay0 = document.getElementById("casesDailyDay0Chart");
+    
+    addChartToList("casesDailyPerMillionDay0", "casesDailyPerMillionDay0Chart", "Day 0: Confirmed Cases", "Daily - Per 1 Million People", "In the chart you can find data on the number of new confirmed cases that were reported on a given day per one million people living in the countries you selected.");
+    var ctx_casesDailyPerMillionDay0 = document.getElementById("casesDailyPerMillionDay0Chart");
+    
+    //DEATHS
+    addChartToList("deathsDay0", "deathsDay0Chart", "Day 0: Reported Deaths", "Cumulative", "In the chart you can find data on the total number of reported deaths from COVID-19 since the pandemic started for the countries you selected.");
+    var ctx_deathsDay0 = document.getElementById("deathsDay0Chart");
+        
+    addChartToList("deathsPerMillionDay0", "deathsPerMillionDay0Chart", "Day 0: Reported Deaths", "Per 1 Million People", "This chart shows how the number of reported deaths from COVID-19 is related to the population of a selected country. In the chart you can find data on the total number of deaths per one million people living in the countries you selected.");
+    var ctx_deathsPerMillionDay0 = document.getElementById("deathsPerMillionDay0Chart");
+    
+    addChartToList("deathsDailyDay0", "deathsDailyDay0Chart", "Day 0: Reported Deaths", "Daily", "In the chart you can find data on the number of new deaths from COVID-19 that were reported on a given day for the countries you selected.");
+    var ctx_deathsDailyDay0 = document.getElementById("deathsDailyDay0Chart");
+    
+    addChartToList("deathsDailyPerMillionDay0", "deathsDailyPerMillionDay0Chart", "Day 0: Reported Deaths", "Daily - Per 1 Million People", "In the chart you can find data on the number of new deaths from COVID-19 that were reported on a given day per one million people living in the countries you selected.");
+    var ctx_deathsDailyPerMillionDay0 = document.getElementById("deathsDailyPerMillionDay0Chart");
+    
+    //MORTALITY
+    
+    addChartToList("caseFatalityRateDay0", "caseFatalityRateDay0Chart", "Day 0: Case Fatality Rate", "In Percent", "In this chart you can find data on the <a href=\"https://en.wikipedia.org/wiki/Case_fatality_rate\">case fatality rate</a> (CFR) since the pandemic started. Case fatality rate is defined here as the total number of reported deaths divided by the total number of confirmed cases. The index here is only calculated for days where the cumulative number of cases exceeds 1000.");
+    var ctx_caseFatalityRateDay0 = document.getElementById("caseFatalityRateDay0Chart");
+    
     /*
      var KnockoutChartWrapper= function (name, chartInstance, rowList) {
      this.name = ko.observable(name);
@@ -16,6 +69,7 @@ $( document ).ready(function() {
         $("#" + countryId).on('click', function (e) {
             e.preventDefault();
             let countryName = countryId.replace(/_/g," ");
+            console.log(countryId);
             toggleCountryInCharts(countryId, countryName);
             
             if( activeCountries.includes( countryId ) ){
@@ -32,7 +86,7 @@ $( document ).ready(function() {
             $(this).toggleClass('border');
             $("#countryInput")[0].value = "";
             $("#countryInput").keyup();
-            
+                        
         });
                 
         $("#countryInput").on("keyup", function() {
@@ -83,6 +137,8 @@ $( document ).ready(function() {
     
     var countryListHTML = $('#countryList');
     
+    
+    
     function addCountryToListAppend(id, countryName){
         countryListHTML.append('<a href="#" class="list-group-item list-group-item-action country-item '+id+'" id="'+id+'">' + countryName + '</a>');
         updateListener(id);
@@ -109,9 +165,9 @@ $( document ).ready(function() {
     function addCountryToCharts(countryId, countryName, countryJQueryItem){
         if( activeCountries.includes( countryId ) ){ return };
         for(chart in charts){
-            //console.log(charts);
-            //console.log(charts[chart].chart.config.data.metricName);
-            //console.log(dataCovidTimeFiltered)
+            console.log(charts);
+            console.log(charts[chart].chart.config.data.metricName);
+            console.log(dataCovidTimeFiltered)
             
             countryDataset = {
                 label: countryName,
@@ -125,6 +181,7 @@ $( document ).ready(function() {
             };
             charts[chart].chart.config.data.datasets.push(countryDataset);
             charts[chart].update();
+            setMaximumYLimitBasedOnVisibleDatapoints(charts[chart]);
         }
         activeCountries.push(countryId);
         window.chartColorsIndex++;
@@ -138,6 +195,7 @@ $( document ).ready(function() {
         for(chart in charts){
             charts[chart].chart.config.data.datasets = charts[chart].chart.config.data.datasets.filter( (e) => ( e.label.localeCompare(countryName) ) != 0);
             charts[chart].update();
+            setMaximumYLimitBasedOnVisibleDatapoints(charts[chart]);
         };
     }
     
@@ -147,16 +205,7 @@ $( document ).ready(function() {
         else{ addCountryToCharts(countryId, countryName) };
     }
     
-    // Assign html elements to js variables
-    var ctx_cases = document.getElementById("casesChart");
-    var ctx_casesPerMillion = document.getElementById("casesPerMillionChart");
-    var ctx_logCases = document.getElementById("logCasesChart");
-    var ctx_casesDaily = document.getElementById("casesDailyChart");
-    var ctx_deaths = document.getElementById("deathsChart");
-    var ctx_deathsDaily = document.getElementById("deathsDailyChart");
-   var ctx_deathsPerMillion = document.getElementById("deathsPerMillionChart")
-   var ctx_logDeaths = document.getElementById("logDeathsChart");
-   var ctx_caseFatalityRate = document.getElementById("caseFatalityRateChart");
+    
     
    var activeCountries = [];
     
@@ -184,15 +233,33 @@ $( document ).ready(function() {
           var dateFilter = dataPoint => moment(dataPoint.x, "DD/MM/YYYY").diff(moment("01/01/2020", "DD/MM/YYYY")) >= 0;
     
           dataCovidTimeFiltered = dataCovid;
-          /*for( country in dataCovidTimeFiltered.cases ){
-              //console.log( dataCovidMarch1.cases[country] );
-              dataCovidTimeFiltered.cases[country] = dataCovidTimeFiltered.cases[country].filter(dateFilter);
-              dataCovidTimeFiltered.casesPerMillion[country] = dataCovidTimeFiltered.casesPerMillion[country].filter(dateFilter);
-              dataCovidTimeFiltered.casesDaily[country] = dataCovidTimeFiltered.casesDaily[country].filter(dateFilter);
-               dataCovidTimeFiltered.deaths[country] = dataCovidTimeFiltered.deaths[country].filter(dateFilter);
-              dataCovidTimeFiltered.deathsPerMillion[country] = dataCovidTimeFiltered.deathsPerMillion[country].filter(dateFilter);
-              dataCovidTimeFiltered.deathsDaily[country] = dataCovidTimeFiltered.deathsDaily[country].filter(dateFilter);
-          }*/
+          
+          //console.log( dataCovidTimeFiltered );
+          
+          for(metric in dataCovidTimeFiltered){
+              
+              let Day0Metric = metric.concat("Day0");
+              dataCovidTimeFiltered[Day0Metric] = {};
+              //console.log(Day0Metric);
+              
+              for( country in dataCovidTimeFiltered.cases ){
+                  let cases100 = dataCovidTimeFiltered.cases[country].filter(el => el.y >= 100);
+                  casesX100 = cases100.map(el => el.x);
+                  //console.log(casesX100);
+                  let data100 = dataCovidTimeFiltered[metric][country].filter(el => casesX100.includes(el.x));
+                  let numOfDays = data100.length;
+                  let startDate = moment("31/12/0000","DD/MM/YYYY");
+                  let data100Day0 =[];
+                  let data100_2 =[];
+                  for(let i=0; i< numOfDays; i++){
+                      data100Day0[i] = startDate.add(1,'day').format("DD/MM/YYYY");
+                      data100_2[i] = {x: data100Day0[i], y: data100[i].y}
+                  }
+                  dataCovidTimeFiltered[Day0Metric][country] = data100_2;
+              }
+              
+          }
+          console.log(dataCovidTimeFiltered);
           
           addCountriesToList();
           initCharts();
@@ -211,7 +278,7 @@ $( document ).ready(function() {
           //$('#United_States_of_America').trigger( "click" );
           //$('#Poland').trigger( "click" );
           
-          
+            
       });
     
     
@@ -220,68 +287,147 @@ $( document ).ready(function() {
                 
         progress.value = 0.8;  
         
+        let normalStartDate = moment().startOf('day').subtract(1, 'months');
+        let day0StartDate = moment("31/12/0000","DD/MM/YYYY");
+        
+        
           charts.push( chartInit(ctx_cases, dataCovidTimeFiltered.cases,'cases',
                     'COVID-19 Confirmed Cases In Selected Countries',
                     'Time (DD/MM/YY)',
                    'Cases Confirmed',
-                   'linear','') );
+                   'linear','',normalStartDate) );
           
           charts.push( chartInit(ctx_casesPerMillion, dataCovidTimeFiltered .casesPerMillion,'casesPerMillion',
                     'COVID-19 Confirmed Cases Per Million People In Selected Countries',
                     'Time (DD/MM/YY)',
-                   'Cases Confirmed Per Million People',
-                   'linear',''));
+                   'Confirmed Cases Per Million People',
+                   'linear','',normalStartDate,normalStartDate));
           
           charts.push(chartInit(ctx_logCases, dataCovidTimeFiltered.cases,'cases',
                     'COVID-19 Confirmed Cases In Selected Countries  - Logarithmic',
                     'Time (DD/MM/YY)',
                    'Cases Confirmed - Logarithmic',
-                   'logarithmic',''));
+                   'logarithmic','',normalStartDate));
           
           charts.push(chartInit(ctx_casesDaily, dataCovidTimeFiltered.casesDaily,'casesDaily',
                     'COVID-19 Confirmed Cases (Daily) In Selected Countries',
                     'Time (DD/MM/YY)',
-                   'Confirmed Cases',
-                   'linear',''));
+                   'Confirmed Cases - Daily',
+                   'linear','',normalStartDate));
+        
+        charts.push(chartInit(ctx_casesDailyPerMillion, dataCovidTimeFiltered.casesDailyPerMillion,'casesDailyPerMillion',
+                    'COVID-19 Reported Cases (Daily) Per Million People In Selected Countries',
+                    'Time (DD/MM/YY)',
+                   'Reported Cases Per Million People - Daily',
+                   'linear', '',normalStartDate));
           
           charts.push(chartInit(ctx_deaths, dataCovidTimeFiltered.deaths,'deaths',
                     'COVID-19 Reported Deaths In Selected Countries',
                     'Time (DD/MM/YY)',
                    'Deaths',
-                   'linear',''));
+                   'linear','',normalStartDate));
           
           charts.push(chartInit(ctx_deathsPerMillion, dataCovidTimeFiltered.deathsPerMillion,'deathsPerMillion',
                     'COVID-19 Reported Deaths Per Million People In Selected Countries',
                     'Time (DD/MM/YY)',
                    'Deaths Per Million People',
-                   'linear',''));
+                   'linear','',normalStartDate));
           
           charts.push(chartInit(ctx_deathsDaily, dataCovidTimeFiltered.deathsDaily,'deathsDaily',
                     'COVID-19 Reported Deaths (Daily) In Selected Countries',
                     'Time (DD/MM/YY)',
-                   'Reported Deaths',
-                   'linear', ''));
+                   'Reported Deaths - Daily',
+                   'linear', '',normalStartDate));
+        
+            charts.push(chartInit(ctx_deathsDailyPerMillion, dataCovidTimeFiltered.deathsDailyPerMillion,'deathsDailyPerMillion',
+                    'COVID-19 Reported Deaths (Daily) Per Million People In Selected Countries',
+                    'Time (DD/MM/YY)',
+                   'Reported Deaths Per Million People - Daily',
+                   'linear', '',normalStartDate));
           
             charts.push(chartInit(ctx_logDeaths, dataCovidTimeFiltered.deaths,'deaths',
                     'COVID-19 Reported Deaths In Selected Countries - Logarithmic',
                     'Time (DD/MM/YY)',
                    'Reported Deaths - Logarithmic',
-                   'logarithmic', ''));
+                   'logarithmic', '',normalStartDate));
         
             charts.push(chartInit(ctx_caseFatalityRate, dataCovidTimeFiltered.caseFatalityRate, 'caseFatalityRate',
                     'COVID-19 Case Fatality Rate In Selected Countries Since 1000 Confirmed Cases',
                     'Time (DD/MM/YY)',
                    'Case Fatality Rate in Percents',
-                   'linear', '%'));
+                   'linear', '%',normalStartDate));
+        
+        //cases day 0
+        charts.push( chartInit(ctx_casesDay0, dataCovidTimeFiltered.casesDay0,'casesDay0',
+                    'COVID-19 Confirmed Cases In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Cases Confirmed',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_casesPerMillionDay0, dataCovidTimeFiltered.casesPerMillionDay0,'casesPerMillionDay0',
+                    'COVID-19 Confirmed Cases Per Million People Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Confirmed Cases Per Million People',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_casesDailyDay0, dataCovidTimeFiltered.ctx_casesDailyDay0,'casesDailyDay0',
+                    'COVID-19 Confirmed Cases (Daily) In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Confirmed Cases - Daily',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_casesDailyPerMillionDay0, dataCovidTimeFiltered.casesDailyPerMillionDay0,'casesDailyPerMillionDay0',
+                    'COVID-19 Reported Cases (Daily) Per Million People In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Confirmed Cases Per Million People - Daily',
+                   'linear','',day0StartDate) );
+        
+        
+        //deaths day 0 
+        
+        charts.push( chartInit(ctx_deathsDay0, dataCovidTimeFiltered.deathsDay0,'deathsDay0',
+                    'COVID-19 Reported Deaths In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Reported Deaths',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_deathsPerMillionDay0, dataCovidTimeFiltered.deathsPerMillionDay0,'deathsPerMillionDay0',
+                    'COVID-19 Reported Deaths Per Million People In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Reported Deaths - Per Million People',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_deathsDailyDay0, dataCovidTimeFiltered.deathsDailyDay0,'deathsDailyDay0',
+                    'COVID-19 Reported Deaths (Daily) In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Reported Deaths - Daily',
+                   'linear','',day0StartDate) );
+        
+        charts.push( chartInit(ctx_deathsDailyPerMillionDay0, dataCovidTimeFiltered.deathsDailyPerMillionDay0,'deathsDailyPerMillionDay0',
+                    'COVID-19 Reported Deaths (Daily) Per Million People In Selected Countries Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Reported Deaths Per Million People - Daily',
+                   'linear','',day0StartDate) );
+        
+        //cfr day 0
+        
+        charts.push( chartInit(ctx_caseFatalityRateDay0, dataCovidTimeFiltered.caseFatalityRateDay0,'caseFatalityRateDay0',
+                    'COVID-19 Case Fatality Rate In Selected Countries From 1000 Confirmed Cases, Since Day 0 (after first 100 confirmed cases)',
+                    'Time (DD/MM/YY)',
+                   'Case Fatality Rate in Percents',
+                   'linear','',day0StartDate) );
         
     }
+    
+    
     //for
 
     //const arr3 = data.filter(ageAndGender);
     //console.log('arr3', arr3);
     // INIT CHART
     
-    function chartInit(ctx, covidMetric, metricName, chartTitle, xLabel, yLabel, yType, unit){
+    
+    function chartInit(ctx, covidMetric, metricName, chartTitle, xLabel, yLabel, yType, unit, startDate){
         
         
         
@@ -293,6 +439,22 @@ $( document ).ready(function() {
         },
         options: {
             
+            legend: {
+                    display: true,
+                    onClick: function(e, legendItem){
+                        //console.log(defaultLegendClickHandler);
+                        var chart = this.chart;
+                        var defaultLegendClickHandler = function(t,e,chart){
+                            var n=e.datasetIndex;
+                            i=chart;
+                            a=i.getDatasetMeta(n);
+                            a.hidden=null===a.hidden?!i.data.datasets[n].hidden:null;
+                            i.update()
+                        };
+                        defaultLegendClickHandler(e, legendItem,chart);
+                        setMaximumYLimitBasedOnVisibleDatapoints(chart);
+                    }
+            },
             
             aspectRatio: 0.6,
             
@@ -335,7 +497,7 @@ $( document ).ready(function() {
                         autoSkip: true,
                         autoSkipPadding: 25,
                         //FIND
-                        min: moment().startOf('day').subtract(1, 'months')
+                        min: startDate
 						
                     }
                     
@@ -348,6 +510,7 @@ $( document ).ready(function() {
 							labelString: yLabel
 						}
 					}]
+                
             },
             //responsive: true,
             maintainAspectRatio: false,
@@ -420,39 +583,7 @@ $( document ).ready(function() {
                         x: null,
                         y: null
                     },
-                    onPanComplete: function({chart}) { /*
-                        function getXAxis(chartInstance) {
-                            var scales = chartInstance.scales;
-                            var scaleIds = Object.keys(scales);
-                            for (var i = 0; i < scaleIds.length; i++) {
-                                var scale = scales[scaleIds[i]];
-
-                                if (scale.isHorizontal()) {
-                                    return scale;
-                                }
-                            }
-                        }
-
-                        function getYAxis(chartInstance) {
-                            var scales = chartInstance.scales;
-                            var scaleIds = Object.keys(scales);
-                            for (var i = 0; i < scaleIds.length; i++) {
-                                var scale = scales[scaleIds[i]];
-
-                                if (!scale.isHorizontal()) {
-                                    return scale;
-                                }
-                            }
-                        }
-                        console.log( [ getXAxis(chart).min, getXAxis(chart).max ] ); 
-                        console.log( [ getYAxis(chart).min, getYAxis(chart).max ] );
-                        console.log(chart.config.data.datasets);
-                        let max = 
-                        for(let dataset in datasets){
-                            max = dataset.data.
-                        }*/
-                        
-                    }
+                    onPanComplete: setMaximumYLimitBasedOnVisibleDatapoints
                 },
 
                 // Container for zoom options
@@ -473,7 +604,8 @@ $( document ).ready(function() {
                         // Format of max pan range depends on scale type
                         x: null,
                         y: null
-                    }
+                    },
+                    onZoomComplete: setMaximumYLimitBasedOnVisibleDatapoints
                 }
             }
         }
@@ -483,9 +615,79 @@ $( document ).ready(function() {
     });
     }
     
+    var  getXAxis = function(chartInstance) {
+                            var scales = chartInstance.scales;
+                            var scaleIds = Object.keys(scales);
+                            for (var i = 0; i < scaleIds.length; i++) {
+                                var scale = scales[scaleIds[i]];
 
-
+                                if (scale.isHorizontal()) {
+                                    return scale;
+                                }
+                            }
+                        };
     
+    var getYAxis = function(chartInstance) {
+                            var scales = chartInstance.scales;
+                            var scaleIds = Object.keys(scales);
+                            for (var i = 0; i < scaleIds.length; i++) {
+                                var scale = scales[scaleIds[i]];
+
+                                if (!scale.isHorizontal()) {
+                                    return scale;
+                                }
+                            }
+                        };
+    
+    var round_to_precision =  function(x, precision) {
+        var y = +x + (precision === undefined ? 0.5 : precision/2);
+        return y - (y % (precision === undefined ? 1 : +precision));
+    }   
+    
+            var setMaximumYLimitBasedOnVisibleDatapoints = function({chart}) { 
+                        
+                        //console.log( [ getXAxis(chart).min, getXAxis(chart).max ] ); 
+                        //console.log( [ getYAxis(chart).min, getYAxis(chart).max ] );
+                        
+                        let xMin = getXAxis(chart).min;
+                        let xMax = getXAxis(chart).max;
+                        let dateFilter = 
+                            dataPoint => 
+                            moment(dataPoint.x, "DD/MM/YYYY").diff(xMin) >= 0
+                            && moment(dataPoint.x, "DD/MM/YYYY").diff(xMax) <= 0 ;
+                        let maxVal = 0;
+                        let minVal = Number.MAX_VALUE;
+                        for (datasetIndex in chart.config.data.datasets){
+                            
+                            let dataset = chart.config.data.datasets[datasetIndex];
+                            //console.log(dataset);
+                            key = Object.keys(dataset._meta)[0];
+                            //if( hidden in dataset._meta )
+                            if(dataset._meta[key].hidden) {continue;}
+                            
+                            let ddata = dataset.data;
+                            //console.log(ddata);
+                            let visibleData = ddata.filter(dateFilter);
+                            //console.log(visibleData);
+                            let yData = visibleData.map(el =>{ return Number(el.y) });
+                            //console.log(Math.max(...yData));
+                            let maxDatasetValue = Math.max(...yData);
+                            let minDatasetValue = Math.min(...yData);
+                            if(maxVal<maxDatasetValue){maxVal = maxDatasetValue;};
+                            if(minVal>minDatasetValue){minVal = minDatasetValue;};
+                            
+                        }
+                        //console.log(chart.config.options.scales.yAxes[0].ticks.max);
+                        let maxDecs = Math.pow( 10, Math.ceil(Math.log10(maxVal))-1 );
+                        let minDecs = Math.pow( 10, Math.floor(Math.log10(maxVal))-1 );
+                        chart.config.options.scales.yAxes[0].ticks.max = round_to_precision(maxVal+maxDecs/2, maxDecs/5);
+                        let newYminVal = round_to_precision(minVal-minDecs, minDecs/5);
+                        if(newYminVal<0) newYminVal = 0;
+                        //chart.config.options.scales.yAxes[0].ticks.min = newYminVal;
+                        chart.update();
+                        
+            }
+            
   
 });
 
