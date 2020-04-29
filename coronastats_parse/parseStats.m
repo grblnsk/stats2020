@@ -86,11 +86,7 @@ countryData = [countryData arrayfun(population ,countryIndices)];
 end
 
 function countryJSON = countryToCasesPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,5) );
     countryJSON = struct( countryName, table(x,y) );
@@ -98,33 +94,21 @@ function countryJSON = countryToCasesPreJSON(countryName, countryData)
 end
 
 function countryJSON = countryToCasesPerMillionPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,5)./ (countryData(:,7)./1000000) );
     countryJSON = struct( countryName, table(x,y) );
 end
 
 function countryJSON = countryToDeathsPerMillionPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,6)./ (countryData(:,7)./1000000) );
     countryJSON = struct( countryName, table(x,y) );
 end
 
 function countryJSON = countryToCasesDailyPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,3) );
     countryJSON = struct( countryName, table(x,y) );
@@ -132,44 +116,28 @@ function countryJSON = countryToCasesDailyPreJSON(countryName, countryData)
 end
 
 function countryJSON = countryToCasesDailyPerMillionPreJSON(countryName,countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,3) ./ (countryData(:,7)./1000000) );
     countryJSON = struct( countryName, table(x,y) );
 end
 
 function countryJSON = countryToDeathsPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,6) );
     countryJSON = struct( countryName, table(x,y) );
 end
 
 function countryJSON = countryToDeathsDailyPreJSON(countryName, countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,4) );
     countryJSON = struct( countryName, table(x,y) );
 end
 
 function countryJSON = countryToDeathsDailyPerMillionPreJSON(countryName,countryData)
-    formatDate = @(dateVal) datestr(dateVal,'dd/mm/yyyy');
-    x=[];
-    for k=1:size(countryData(:,2),1)
-        x = [x;formatDate(countryData(k,2))];
-    end
+    x= datestr(countryData(:,2),'dd/mm/yyyy') ;
     x = string( x );
     y = string( countryData(:,4) ./ (countryData(:,7)./1000000) );
     countryJSON = struct( countryName, table(x,y) );
