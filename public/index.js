@@ -301,7 +301,7 @@ $( document ).ready(function() {
                 
         progress.value = 0.8;  
         
-        let normalStartDate = moment().startOf('day').subtract(2, 'months');
+        let normalStartDate = moment().startOf('day').subtract(1, 'months');
         let day0StartDate = moment("31/12/0000","DD/MM/YYYY");
         
         

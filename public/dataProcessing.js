@@ -84,7 +84,7 @@ var processCountryData = function(countryGeoId, ecdcData){
         
         
         //DEATH-LEVEL
-        let deathsDaily = countryData.map( entry => ({x:entry.day+'/'+entry.month+'/'+entry.year, y:entry.cases}) );
+        let deathsDaily = countryData.map( entry => ({x:entry.day+'/'+entry.month+'/'+entry.year, y:entry.deaths}) );
         let deathsDailyPerMillion = deathsDaily.map( (xyEntry) => (
             {
              x:xyEntry.x,
