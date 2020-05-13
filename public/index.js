@@ -69,7 +69,7 @@ $( document ).ready(function() {
         $("#" + countryId).on('click', function (e) {
             e.preventDefault();
             let countryName = countryId.replace(/_/g," ");
-            console.log(countryId);
+            //console.log(countryId);
             toggleCountryInCharts(countryId, countryName);
             
             if( activeCountries.includes( countryId ) ){
@@ -165,9 +165,9 @@ $( document ).ready(function() {
     function addCountryToCharts(countryId, countryName, countryJQueryItem){
         if( activeCountries.includes( countryId ) ){ return };
         for(chart in charts){
-            console.log(charts);
-            console.log(charts[chart].chart.config.data.metricName);
-            console.log(dataCovidTimeFiltered)
+            //console.log(charts);
+            //console.log(charts[chart].chart.config.data.metricName);
+            //console.log(dataCovidTimeFiltered)
             
             countryDataset = {
                 label: countryName,
@@ -216,21 +216,30 @@ $( document ).ready(function() {
     // CALL FOR DATA
     
     progressText(progress, "Loading data...");
+    /////////////////////////////////////////
+    var t0 = performance.now();
     
-    var dataCall = $.getJSON( "data.json", function(data, textStatus, jqXHR) {
-      console.log( "success" );
-    })
-      .done(function() {
-          console.log( "0.5" );
-          
-      })
-      .fail(function() {
-        console.log( "error" );
-      })
-      .always(function() {
-          dataCovid = dataCall.responseJSON.data;
-          
-          var dateFilter = dataPoint => moment(dataPoint.x, "DD/MM/YYYY").diff(moment("01/01/2020", "DD/MM/YYYY")) >= 0;
+    var dataCall = {responseJSON:{}};
+    fetch('https://cors-anywhere.herokuapp.com/https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide.xlsx').then(function(res) {
+        
+      
+      if(!res.ok) throw new Error("fetch failed");
+      //console.log(res);
+      return res.arrayBuffer();
+    }).then(function(ab) {
+      let t0 = performance.now();
+      let data = new Uint8Array(ab);
+      //console.log(data);
+      let workbook = XLSX.read(data, {type:"array"});
+      //console.log(workbook);
+      let sheet = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+      let processedData = processData(sheet);
+      dataCall.responseJSON = processedData;
+      dataCovid = dataCall.responseJSON.data;
+      let t1 = performance.now();
+      console.log("Fetch processed in " + (t1 - t0) + " milliseconds.");
+        
+      var dateFilter = dataPoint => moment(dataPoint.x, "DD/MM/YYYY").diff(moment("01/01/2020", "DD/MM/YYYY")) >= 0;
     
           dataCovidTimeFiltered = dataCovid;
           
@@ -259,27 +268,32 @@ $( document ).ready(function() {
               }
               
           }
-          console.log(dataCovidTimeFiltered);
+          //console.log(dataCovidTimeFiltered);
           
           addCountriesToList();
           initCharts();
           progress.innerHTML = "";
-          updateTimestamp.innerHTML = "Last Updated: ".concat( dataCall.responseJSON.timestamp );
+          updateTimestamp.innerHTML = "Data Downloaded and Processed: ".concat( dataCall.responseJSON.timestamp );
           
-          let userCountryMatch = stringSimilarity.findBestMatch(userCountry, Object.getOwnPropertyNames(dataCovid.cases));
-          //console.log(userCountryMatch);
-          if( userCountryMatch.bestMatch.rating > 0.5){
-              userCountry = userCountryMatch.bestMatch.target;
-          };
-          
-          
-          //addCountryToCharts('United_States_of_America','United_States_of_America'.replace(/_/g," "));
-          $('#'+userCountry).trigger( "click" );
-          //$('#United_States_of_America').trigger( "click" );
+          try {
+              let userCountryMatch = stringSimilarity.findBestMatch(userCountry, Object.getOwnPropertyNames(dataCovid.cases));
+              //console.log(userCountryMatch);
+              if( userCountryMatch.bestMatch.rating > 0.5){
+                  userCountry = userCountryMatch.bestMatch.target;
+              };
+              $('#'+userCountry).trigger( "click" );
+          }catch(err){
+              console.log("Error of String Similarity")
+              $('#United_States_of_America').trigger( "click" );
+          }
+          $('#'+'casesDailyButton').trigger( "click" );
+          //
           //$('#Poland').trigger( "click" );
-          
-            
-      });
+        let t2 = performance.now();
+        console.log("Loaded in " + (t2 - t0) + " milliseconds.");
+        
+    });
+    ///////////////////////////////////////
     
     
     function initCharts(){
@@ -287,7 +301,7 @@ $( document ).ready(function() {
                 
         progress.value = 0.8;  
         
-        let normalStartDate = moment().startOf('day').subtract(1, 'months');
+        let normalStartDate = moment().startOf('day').subtract(2, 'months');
         let day0StartDate = moment("31/12/0000","DD/MM/YYYY");
         
         
@@ -415,7 +429,7 @@ $( document ).ready(function() {
                     'COVID-19 Case Fatality Rate In Selected Countries From 1000 Confirmed Cases, Since Day 0 (after first 100 confirmed cases)',
                     'Time (DD/MM/YY)',
                    'Case Fatality Rate in Percents',
-                   'linear','',day0StartDate) );
+                   'linear','%',day0StartDate) );
         
     }
     

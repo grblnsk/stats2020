@@ -28,9 +28,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.5/dist/chartjs-plugin-zoom.min.js" integrity="sha256-KLpPTiChnsiDPdNKaRZvEeOpCNjUCJ61fRBe7zX2SZU=" crossorigin="anonymous"></script>
+    <script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+    <script type="text/javascript" src="//unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="dataProcessing.js"></script>
     <script src="index.js"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
+    
     
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -83,7 +86,7 @@
             Source:	<a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">European Centre for Disease Prevention and Control</a>
                 </div>
             <div id="updateTimestamp" class="text-center">
-                Last Updated: ...
+                Data Downloaded and Processed: ...
                 </div>
             
 
@@ -131,7 +134,7 @@
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesPerMillion" role="tab">
                             <p class="h6">Confirmed Cases</p>
                             Per 1 Million People</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesDaily" role="tab">
+                        <a id="casesDailyButton" class="list-group-item list-group-item-action" data-toggle="list" href="#casesDaily" role="tab">
                               <p class="h6">Confirmed Cases</p>
                                 Daily </a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#casesDailyPerMillion" role="tab">
@@ -216,7 +219,7 @@
                            </p> 
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                    
                               </div>
@@ -243,7 +246,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart is based on the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart is based on the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
 
@@ -264,7 +267,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
@@ -286,7 +289,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
@@ -309,7 +312,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
@@ -331,7 +334,7 @@
                             In the chart you can find data on the total number of reported deaths from COVID-19 since the pandemic started for the countries you selected. 
                            </p> 
                          <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     </div>
@@ -352,7 +355,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart is based on the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries.
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart is based on the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is different from the number of all the deaths that took place from COVID-19 in the selected countries.
                             </p>
                                   </div></div>
                     </div>
@@ -372,7 +375,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is diffirent from the number of all the deaths that took place from COVID-19 in the selected countries.
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of deaths from COVID-19 that were reported by countries' institutions to ECDC which is diffirent from the number of all the deaths that took place from COVID-19 in the selected countries.
                             </p>
                         </div></div>
                         
@@ -395,7 +398,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
@@ -416,7 +419,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
@@ -443,7 +446,7 @@
                             </p>
                         
                             <p>
-                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Last Updated". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
+                                The chart uses the latest data acquired from European Center for Disease Prevention and Control (ECDC) at the time shown in the top of the website "Data Downloaded and Processed". The chart shows the number of COVID-19 confirmed cases that were reported by countries' institutions to ECDC which is different from the number of all the infections that took place from COVID-19 in the selected countries. 
                             </p>
                                   </div></div>
                     
