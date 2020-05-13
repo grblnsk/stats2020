@@ -273,7 +273,7 @@ $( document ).ready(function() {
           addCountriesToList();
           initCharts();
           progress.innerHTML = "";
-          updateTimestamp.innerHTML = "Data Downloaded and Processed: ".concat( dataCall.responseJSON.timestamp );
+          updateTimestamp.innerHTML = "Last Updated: ".concat( dataCall.responseJSON.timestamp );
           
           try {
               let userCountryMatch = stringSimilarity.findBestMatch(userCountry, Object.getOwnPropertyNames(dataCovid.cases));
@@ -301,7 +301,7 @@ $( document ).ready(function() {
                 
         progress.value = 0.8;  
         
-        let normalStartDate = moment().startOf('day').subtract(1, 'months');
+        let normalStartDate = moment().startOf('day').subtract(2, 'months');
         let day0StartDate = moment("31/12/0000","DD/MM/YYYY");
         
         
