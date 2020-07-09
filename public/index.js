@@ -220,13 +220,21 @@ $( document ).ready(function() {
     var t0 = performance.now();
     
     var dataCall = {responseJSON:{}};
+    progressText(progress, "Connecting to ECDC (up to 5s)...");
     fetch('https://cors-anywhere.herokuapp.com/https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide.xlsx').then(function(res) {
         
       
-      if(!res.ok) throw new Error("fetch failed");
+      if(!res.ok){
+          throw new Error("fetch failed");
+          progressText(progress, "Connection Failed.");
+          res = fetch('https://cors-anywhere.herokuapp.com/https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide.xlsx');
+      } 
+      progressText(progress, "Data received...");
+      progressText(progress, "Processing data...");
       //console.log(res);
       return res.arrayBuffer();
     }).then(function(ab) {
+      
       let t0 = performance.now();
       let data = new Uint8Array(ab);
       //console.log(data);

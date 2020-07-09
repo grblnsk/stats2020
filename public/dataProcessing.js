@@ -30,7 +30,6 @@ var processData = function(ecdcData) {
         
         let t0 = performance.now();
         let countriesData = countryGeoIds.map( (geoId) => processCountryData(geoId, ecdcData) );
-        
         let t1 = performance.now();
         console.log("Countries processed in " + (t1 - t0) + " milliseconds.");
     
@@ -53,10 +52,9 @@ var processCountryData = function(countryGeoId, ecdcData){
         //COUNTRY-LEVEL
         let countryData = ecdcData.filter( (obj) => obj.geoId.localeCompare(countryGeoId) == 0 ).reverse();
         //console.log(countryData);
-        let population = countryData[0].popData2018;
+        let population = countryData[0].popData2019;
         let name = countryData[0].countriesAndTerritories;
         const cummulator = (accumulator, currentValue) => accumulator + currentValue;
-        
         
         //CASE-LEVEL
         let casesDaily = countryData.map( entry => ({x:entry.day+'/'+entry.month+'/'+entry.year, y:entry.cases}) );
